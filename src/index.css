@@ -2,4 +2,38 @@
   background-color: black;
   color: white;
   min-height: 900px ;
+  padding: 0;
+}
+
+.header {
+  border-bottom: 1px solid #ddd;
+}
+
+.sidebar {
+  width: 120px;
+  margin: 5px;
+  position: sticky;
+  top: 62px;
+  align-self: flex-start;
+  align-items: start;
+}
+
+.sidebar .nav-item {
+  width: 100%;
+}
+
+.sidebar a {
+  color: #444;
+}
+
+.sidebar a:hover {
+  background-color: #eee;
+}
+
+.sidebar a:visited {
+  color: #444;
+}
+
+.sidebar .nav-item .active {
+  background-color: #def;
 }
