@@ -17,7 +17,6 @@ export default function Login({ updateUser }) {
         })
         if (res.ok){
             const data = await res.json()
-            console.log(data);
             updateUser({ token: data.token, username: user.username, password: user.password })
         }
         setIsLogging(false)
