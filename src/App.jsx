@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import Container from 'react-bootstrap/Container'
 
 import { Posts } from "./components/Posts"
 import Header from './components/Header'
+import Post from './components/forms/Post'
 import Whiteboard from './components/Whiteboard'
 import Register from './components/forms/Register'
 import Users from './components/Users'
@@ -13,16 +15,33 @@ import { Route, Routes } from 'react-router-dom'
 
 export default function App() {
 
+  const [user, setUser] = useState({username: '', password: '', token:''})
+  console.log(user);
+
+  function updateUser({ username, password, token }){
+    setUser({ username, password, token })
+  }
+
   return (
     <Container fluid data-bs-theme='dark' className='app'>
       <Header />
-
+      <Post user={user}/>
       <Routes>
-        <Route path='/' element={<LandingPage><Whiteboard/></LandingPage>} />
-        <Route path='/login' element={<FormPage><Login /></FormPage>} />
-        <Route path='/register' element={<FormPage><Register/></FormPage>} />
-        <Route path='/users' element={<SocialPage><Users/></SocialPage>} />
-        <Route path='/posts' element={<SocialPage><Posts/></SocialPage>} />
+        <Route path='/' element={<LandingPage>
+          <Whiteboard />
+        </LandingPage>} />
+        <Route path='/login' element={<FormPage>
+          <Login user={user} updateUser={updateUser}/>
+        </FormPage>} />
+        <Route path='/register' element={<FormPage>
+          <Register />
+        </FormPage>} />
+        <Route path='/users' element={<SocialPage>
+          <Users />
+        </SocialPage>} />
+        <Route path='/posts' element={<SocialPage>
+          <Posts />
+        </SocialPage>} />
       </Routes>
 
     </Container>

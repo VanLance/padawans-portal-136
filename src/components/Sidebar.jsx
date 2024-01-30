@@ -1,18 +1,19 @@
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
+import { NavLink } from 'react-router-dom'
 
 
 export default function Sidebar() {
   return (
     <Navbar sticky='top' className='flex-column sidebar'>
         <Nav.Item>
-            <Nav.Link href='/'>Feed</Nav.Link>
+            <Nav.Link as={ NavLink } to='/posts'>Feed</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-            <Nav.Link href='/'>My Page</Nav.Link>
+            <Nav.Link as={ NavLink } to='/'>My Page</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-            <Nav.Link href='/'>Padawans Playground</Nav.Link>
+            <Nav.Link as={ NavLink } to='/'>Padawans Playground</Nav.Link>
         </Nav.Item>
     </Navbar>
   )

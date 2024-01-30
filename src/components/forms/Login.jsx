@@ -1,8 +1,9 @@
 import { useState } from "react"
 
-export default function Login() {
-    const [user, setUser] = useState({username: '', password: ''})
+export default function Login({ updateUser }) {
+    
     const [ isLogging, setIsLogging ] = useState(false)
+    const [ user, setUser ] = useState({username:'',password:'',token:''})
 
     if( isLogging ){
         loginUser()
@@ -17,10 +18,11 @@ export default function Login() {
         if (res.ok){
             const data = await res.json()
             console.log(data);
+            updateUser({ token: data.token, username: user.username, password: user.password })
         }
         setIsLogging(false)
     }
-
+9
     function handleSubmit(e){
         e.preventDefault()
         const loginElement = e.currentTarget

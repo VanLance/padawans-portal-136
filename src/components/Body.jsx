@@ -9,7 +9,7 @@ export default function Body({ sidebar, children }) {
         <Container>
             <Stack direction='horizontal'>
                { sidebar && <Sidebar /> }
-                <Container>
+                <Container className='center-content'>
                     { children }
                 </Container>
             </Stack>
