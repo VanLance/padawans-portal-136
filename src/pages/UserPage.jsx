@@ -26,6 +26,11 @@ export default function UserPage() {
     if (!user) return <Spinner />
 
     return (
-        <h2>{user.username}</h2>
+        <>
+            <h2>{user.username}</h2>
+            {user.posts.map((post) => {
+                return <p key={post.id}>{post.body} <small>{post.timestamp}</small> </p>
+            })}
+        </>
     )
 }

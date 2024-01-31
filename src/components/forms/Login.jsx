@@ -1,13 +1,22 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { toast } from 'react-toastify'
 
 export default function Login({ updateUser }) {
     
     const [ isLogging, setIsLogging ] = useState(false)
     const [ user, setUser ] = useState({username:'',password:'',token:''})
+    const navigate = useNavigate()
 
     if( isLogging ){
         loginUser()
     }
+    
+    // useEffect(()=>{
+    //     if(user.id){
+    //         navigate('/')
+    //     }
+    // },[])
 
     async function loginUser(){
         const res = await fetch('http://127.0.0.1:5000/login',{
@@ -17,11 +26,19 @@ export default function Login({ updateUser }) {
         })
         if (res.ok){
             const data = await res.json()
-            updateUser({ token: data.token, username: user.username, password: user.password })
+            console.log(data)
+            if(data.token){
+                updateUser({ token: data.token, username: user.username, password: user.password })
+                toast.success(user.username.concat(' logged in!'))
+                navigate('/')
+                return
+            }
         }
+        toast.error('Invalid User Info/ Try Again')
+        console.error("Login failed")
         setIsLogging(false)
     }
-9
+
     function handleSubmit(e){
         e.preventDefault()
         const loginElement = e.currentTarget

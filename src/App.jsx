@@ -13,6 +13,7 @@ import LandingPage from './pages/LandingPage'
 import Login from './components/forms/Login'
 import { Route, Routes } from 'react-router-dom'
 import UserPage from './pages/UserPage'
+import { ToastContainer } from 'react-toastify'
 
 export default function App() {
 
@@ -38,15 +39,14 @@ export default function App() {
           <Register />
         </FormPage>} />
         <Route path='/users' element={<SocialPage>
-          <Users />
+          <Users user={user}/>
         </SocialPage>} />
         <Route path='/posts' element={<SocialPage>
           <Posts />
         </SocialPage>} />
         <Route path='/user/:username' element={<UserPage />} />
-
       </Routes>
-
+      <ToastContainer />
     </Container>
   )
 }
