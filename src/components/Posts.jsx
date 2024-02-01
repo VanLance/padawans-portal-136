@@ -18,10 +18,10 @@ export const Posts = () => {
     }, [])
   
     return (
-        <>
+        <div>
             {posts.length > 0 ? posts.map((post) => {
                 return <Post key={post.id} post={post} />
             }) : <p>No Posts to Display</p>}
-        </>
+        </div>
     )
 }

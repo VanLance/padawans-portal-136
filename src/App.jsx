@@ -17,12 +17,8 @@ import { ToastContainer } from 'react-toastify'
 
 export default function App() {
 
-  const [user, setUser] = useState({ username: '', password: '', token: '' })
+  const [user, setUser] = useState({ username: '', password: '', token: '', followed: '' })
 
-
-  function updateUser({ username, password, token }) {
-    setUser({ username, password, token })
-  }
 
   return (
     <Container fluid data-bs-theme='dark' className='app'>
@@ -33,7 +29,7 @@ export default function App() {
           <Whiteboard />
         </LandingPage>} />
         <Route path='/login' element={<FormPage>
-          <Login user={user} updateUser={updateUser} />
+          <Login />
         </FormPage>} />
         <Route path='/register' element={<FormPage>
           <Register />

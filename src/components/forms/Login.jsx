@@ -1,11 +1,16 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify'
+import { UserContext } from "../../contexts/UserContext"
 
-export default function Login({ updateUser }) {
+
+
+export default function Login() {
     
     const [ isLogging, setIsLogging ] = useState(false)
     const [ user, setUser ] = useState({username:'',password:'',token:''})
+
+    const { updateUser } = useContext(UserContext)
     const navigate = useNavigate()
 
     if( isLogging ){
@@ -18,18 +23,29 @@ export default function Login({ updateUser }) {
     //     }
     // },[])
 
+    async function getUser(username){
+            const res = await fetch('http://127.0.0.1:5000/user/'.concat(username))
+            if (res.ok) {
+                const data = await res.json()
+                console.log(data);
+                return data
+            }
+        }
+
     async function loginUser(){
-        const res = await fetch('http://127.0.0.1:5000/login',{
+        const res = await fetch('https://padawans-portal-api.onrender.com/login',{
             method : "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         })
         if (res.ok){
             const data = await res.json()
-            console.log(data)
+            console.log(data, 'from login')
             if(data.token){
-                updateUser({ token: data.token, username: user.username, password: user.password })
                 toast.success(user.username.concat(' logged in!'))
+                const userData = await getUser(user.username)
+                console.log(userData, 'user data')
+                updateUser({ token: data.token, username: user.username, password: user.password, followed: userData.followed })
                 navigate('/')
                 return
             }
