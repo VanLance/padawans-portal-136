@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Spinner from 'react-bootstrap/Spinner'
+import { UserContext } from "../contexts/UserContext";
 
-export default function Users({ user: loggedUser }) {
+export default function Users() {
 
-    console.log(loggedUser, 'from users page');
+    const { user: loggedUser } = useContext(UserContext)
+    
     const [users, setUser] = useState([])
 
     useEffect(() => {
@@ -11,7 +13,6 @@ export default function Users({ user: loggedUser }) {
             const res = await fetch('http://127.0.0.1:5000/user')
             if (res.ok) {
                 const data = await res.json()
-                console.log(data, 'usresr');
                 setUser(data)
             } else console.log('error');
         })()

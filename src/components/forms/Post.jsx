@@ -1,9 +1,11 @@
 
-import { useRef } from "react"
+import { useContext, useRef } from "react"
+import { UserContext } from "../../contexts/UserContext"
 
 
-export default function Post({ user }) {
+export default function Post() {
 
+    const { user } = useContext(UserContext)
     const postInputRef = useRef(null)
 
     async function sendPost( postData ){

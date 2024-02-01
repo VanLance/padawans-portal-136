@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 import Container from 'react-bootstrap/Container'
 
 import { Posts } from "./components/Posts"
@@ -14,16 +14,14 @@ import Login from './components/forms/Login'
 import { Route, Routes } from 'react-router-dom'
 import UserPage from './pages/UserPage'
 import { ToastContainer } from 'react-toastify'
+import Logout from './components/Logout'
 
 export default function App() {
-
-  const [user, setUser] = useState({ username: '', password: '', token: '', followed: '' })
-
 
   return (
     <Container fluid data-bs-theme='dark' className='app'>
       <Header />
-      <Post user={user} />
+      <Post />
       <Routes>
         <Route path='/' element={<LandingPage>
           <Whiteboard />
@@ -35,12 +33,13 @@ export default function App() {
           <Register />
         </FormPage>} />
         <Route path='/users' element={<SocialPage>
-          <Users user={user}/>
+          <Users />
         </SocialPage>} />
         <Route path='/posts' element={<SocialPage>
           <Posts />
         </SocialPage>} />
         <Route path='/user/:username' element={<UserPage />} />
+        <Route path='logout' element={<Logout/>} />
       </Routes>
       <ToastContainer />
     </Container>
