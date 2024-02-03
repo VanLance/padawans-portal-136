@@ -5,14 +5,13 @@ import { useNavigate } from "react-router-dom"
 
 export default function Logout() {
 
-    const { logoutUser, updateLocalStorage } = useContext(UserContext)
+    const { logoutUser } = useContext(UserContext)
     const navigate = useNavigate()
 
-    useEffect(()=> {
+    useEffect(() => {
         logoutUser()
-        updateLocalStorage()
         navigate('/login')
-    }, [logoutUser])
+    }, [])
 
     return <Spinner />
 }

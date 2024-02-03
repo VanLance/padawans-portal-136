@@ -4,8 +4,10 @@ export default function Register() {
 
     const [user, setUser] = useState({ username: '', email: '', password: '' })
    
+    const apiUrl = import.meta.env.VITE_API_URL
+    
     async function registerUser(){
-        const res = await fetch('https://padawans-portal-api.onrender.com/register',{
+        const res = await fetch(apiUrl.concat('/register'),{
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)

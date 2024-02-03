@@ -1,13 +1,19 @@
 import { useState } from "react"
 import Post from "./SinglePost"
 
-export const Posts = () => {
+const Posts = ({ posts: userPosts }) => {
 
-    const [ posts, setPosts ] = useState([])
+    const [ posts, setPosts ] = useState(userPosts)
 
+    const apiUrl = import.meta.env.VITE_API_URL
+
+    console.log(posts, userPosts , '/////// posts');
     useState( () => {
+        if(posts) {
+            return
+        }
         (async ()=>{
-            const res = await fetch('http://127.0.0.1:5000/post/')
+            const res = await fetch(apiUrl.concat('/post/'))
             if(res.ok){
                 const data = await res.json()
                 setPosts(data);
@@ -19,9 +25,11 @@ export const Posts = () => {
   
     return (
         <div>
-            {posts.length > 0 ? posts.map((post) => {
+            {posts ? posts.map((post) => {
                 return <Post key={post.id} post={post} />
             }) : <p>No Posts to Display</p>}
         </div>
     )
 }
+
+export default Posts

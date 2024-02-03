@@ -5,12 +5,14 @@ import { UserContext } from "../contexts/UserContext";
 export default function Users() {
 
     const { user: loggedUser } = useContext(UserContext)
-    
+
     const [users, setUser] = useState([])
+
+    const apiUrl = import.meta.env.VITE_API_URL
 
     useEffect(() => {
         (async () => {
-            const res = await fetch('http://127.0.0.1:5000/user')
+            const res = await fetch(apiUrl.concat('/user'))
             if (res.ok) {
                 const data = await res.json()
                 setUser(data)
@@ -36,7 +38,14 @@ export default function Users() {
         }
     }
 
-    function unfollowUser(){}
+    function unfollowUser() { }
+
+    function FollowButton({userId}) {
+        return (loggedUser.followed?.[userId] ?
+            <button onClick={() => unfollowUser(userId)}>Unfollow</button> :
+            <button onClick={() => followUser(userId)}>Follow</button>
+    )}
+
 
     return (
         <div>
@@ -44,10 +53,7 @@ export default function Users() {
                 if (user.username !== loggedUser.username) {
                     return <div key={user.id}>
                         <p>{user.username}</p>
-                        { loggedUser.followed.hasOwnProperty(user.id) ? 
-                        <button onClick={() => unfollowUser(user.id)}>Unfollow</button> :
-                        <button onClick={() => { followUser(user.id) }}>Follow</button>
-                     }
+                        {loggedUser.username && <FollowButton userId={user.id}/>}
                     </div>
                 }
             })}

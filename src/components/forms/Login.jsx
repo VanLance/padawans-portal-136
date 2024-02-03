@@ -3,71 +3,62 @@ import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify'
 import { UserContext } from "../../contexts/UserContext"
 
-
-
 export default function Login() {
-    
-    const [ isLogging, setIsLogging ] = useState(false)
-    const [ user, setUser ] = useState({username:'',password:'',token:''})
 
-    const { updateUser, user: userState, updateLocalStorage } = useContext(UserContext)
+    const [isLogging, setIsLogging] = useState(false)
+    const [user, setUser] = useState({ username: '', password: '', token: '' })
+
+    const apiUrl = import.meta.env.VITE_API_URL
+
+    const { updateUser, user: userState, updateUserLocalStorage } = useContext(UserContext)
     const navigate = useNavigate()
 
-    if( isLogging ){
-        console.log(user, 'user info');
+    if (isLogging) {
         loginUser()
     }
-    
-    useEffect(()=>{
-        if(userState.username){
-            navigate('/')
-            return
-        } 
-        const localUser = JSON.parse(localStorage.getItem('user'))
-        console.log(localUser, 'local user');
-        if( localUser.username && !userState.username ){
-            console.log('in if =========');
-            updateUser(localUser)
+
+    useEffect(() => {
+        if (userState.username) {
+            updateUserLocalStorage()
             navigate('/')
             return
         }
-    },[])
+    }, [updateUser])
 
-    async function getUser(username){
-            const res = await fetch('http://127.0.0.1:5000/user/'.concat(username))
-            if (res.ok) {
-                const data = await res.json()
-                console.log(data);
-                return data
-            }
+    async function getUser(username) {
+        const res = await fetch(`${apiUrl}/user/${username}`)
+        if (res.ok) {
+            const data = await res.json()
+            console.log(data);
+            return data
+        }
     }
 
-    async function loginUser(){
-        console.log(user, 'from req==========');
-        const res = await fetch('https://padawans-portal-api.onrender.com/login',{
-            method : "POST",
+    async function loginUser() {
+        setIsLogging(false)
+
+        const res = await fetch('https://padawans-portal-api.onrender.com/login', {
+            method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         })
-        if (res.ok){
+
+        if (res.ok) {
             const data = await res.json()
 
-            if(data.token){
+            if (data.token) {
                 toast.success(user.username.concat(' logged in!'))
                 const userData = await getUser(user.username)
-
-                updateUser({ token: data.token, username: user.username, followed: userData.followed })
-                updateLocalStorage()
-                navigate('/')
+                console.log(userData, 'after login ');
+                updateUser({ token: data.token, username: user.username, followed: userData?.followed })
                 return
             }
         }
         toast.error('Invalid User Info/ Try Again')
         console.error("Login failed")
-        setIsLogging(false)
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault()
         const loginElement = e.currentTarget
         const loginForm = new FormData(loginElement)
@@ -84,7 +75,7 @@ export default function Login() {
             <h3>Login</h3>
             <form action="" id='login-form' onSubmit={handleSubmit}>
                 <label htmlFor="username"></label><br />
-                <input type="text" name='username'/><br />
+                <input type="text" name='username' /><br />
                 <label htmlFor="password"></label><br />
                 <input type="password" name={'password'} /><br />
                 <input type="submit" value={'Login'} />

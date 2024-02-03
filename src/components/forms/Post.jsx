@@ -8,16 +8,18 @@ export default function Post() {
     const { user } = useContext(UserContext)
     const postInputRef = useRef(null)
 
-    async function sendPost( postData ){
-        const res = await fetch('http://127.0.0.1:5000/post/',{
+    const apiUrl = import.meta.env.VITE_API_URL
+
+    async function sendPost(postData) {
+        const res = await fetch(apiUrl.concat('/post/'), {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${user.token}`
             },
-            body: JSON.stringify({body: postData})
+            body: JSON.stringify({ body: postData })
         })
-        if(res.ok){
+        if (res.ok) {
             const data = await res.json()
             console.log(data);
             return
@@ -25,17 +27,22 @@ export default function Post() {
         console.error('Post failed')
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault()
         const postData = postInputRef.current.value
         sendPost(postData)
     }
 
     return (
-        <form action="" onSubmit={handleSubmit}>
-            <label htmlFor="post">Post</label>
-            <input type="text" name='post' ref={postInputRef} />
-            <input type="submit" value='post'/>
-        </form>
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '1rem'
+        }}>
+            <form action="" onSubmit={handleSubmit}>
+                <input type="text" name='post' ref={postInputRef} placeholder="What is Happening"/>
+                <input type="submit" value='post' />
+            </form>
+        </div>
     )
 }
