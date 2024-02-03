@@ -23,9 +23,9 @@ export default function Header() {
                 {user.username ?
                     <Nav.Link as={NavLink} to='/logout'>Logout</Nav.Link> :
                     <NavDropdown title={<RiAliensLine />} id="basic-nav-dropdown">
-                    <NavDropdown.Item as={NavLink} to='/login'>Login</NavDropdown.Item>
-                    <NavDropdown.Item as={NavLink} to='/register'>Register</NavDropdown.Item>
-                  </NavDropdown>
+                        <NavDropdown.Item as={NavLink} to='/login'>Login</NavDropdown.Item>
+                        <NavDropdown.Item as={NavLink} to='/register'>Register</NavDropdown.Item>
+                    </NavDropdown>
                 }
             </Container>
 

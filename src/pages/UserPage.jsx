@@ -31,9 +31,6 @@ export default function UserPage() {
         <Body sidebar>
             <h2>{user.username}</h2>
             <Posts posts={user.posts} />
-            {/* {user.posts.map((post) => {
-                return <p key={post.id}>{post.body} <small>{post.timestamp}</small> </p>
-            })} */}
         </Body>
     )
 }

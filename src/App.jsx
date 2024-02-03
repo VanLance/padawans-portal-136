@@ -15,14 +15,15 @@ import Login from './components/forms/Login'
 import UserPage from './pages/UserPage'
 import Logout from './components/Logout'
 import useUserContext from './useUserContext'
+import UserFriendsPage from './pages/UserFriendsPage'
 
 export default function App() {
 
   const { updateUserFromLocalStorage } = useUserContext()
 
-  useEffect(()=>{
+  useEffect(() => {
     updateUserFromLocalStorage()
-  },[])
+  }, [])
 
   return (
     <Container fluid data-bs-theme='dark' className='app'>
@@ -44,7 +45,8 @@ export default function App() {
           <Posts />
         </SocialPage>} />
         <Route path='/user/:username' element={<UserPage />} />
-        <Route path='logout' element={<Logout/>} />
+        <Route path='/user/friends' element={<UserFriendsPage />} />
+        <Route path='logout' element={<Logout />} />
       </Routes>
       <ToastContainer />
     </Container>
